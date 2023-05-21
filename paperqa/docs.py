@@ -116,6 +116,8 @@ class Docs:
             # peak first chunk
             texts, _ = read_doc(path, "", "", chunk_chars=chunk_chars)
             if len(texts) == 0:
+                texts, _ = read_doc(path, "", "", chunk_chars=chunk_chars*2)
+            if len(texts) == 0:
                 raise ValueError(f"Could not read document {path}. Is it empty?")
             citation = cite_chain.run(texts[0])
             if len(citation) < 3 or "Unknown" in citation or "insufficient" in citation:
@@ -270,7 +272,7 @@ class Docs:
             self._faiss_index = None
         if not hasattr(self, "_doc_index"):
             self._doc_index = None
-        self.update_llm(None, None)
+        #self.update_llm(None, None)
 
     def _build_faiss_index(self):
         if self._faiss_index is None:
@@ -515,7 +517,7 @@ class Docs:
         formatted_answer = f"Question: {query}\n\n{answer_text}\n"
         if len(bib) > 0:
             formatted_answer += f"\nReferences\n\n{bib_str}\n"
-        formatted_answer += f"\nTokens Used: {answer.tokens} Cost: ${answer.cost:.2f}"
+        #formatted_answer += f"\nTokens Used: {answer.tokens} Cost: ${answer.cost:.2f}"
         answer.answer = answer_text
         answer.formatted_answer = formatted_answer
         answer.references = bib_str
