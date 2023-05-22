@@ -512,7 +512,8 @@ class Docs:
                 bib[skey] = citation
                 passages[key] = text
         bib_str = "\n\n".join(
-            [f"{i+1}. ({k}): {c}" for i, (k, c) in enumerate(bib.items())]
+            #[f"{i+1}. ({k}): {c}" for i, (k, c) in enumerate(bib.items())]
+            [f"{i+1}. {k}" for i, (k, c) in enumerate(bib.items())]
         )
         formatted_answer = f"Question: {query}\n\n{answer_text}\n"
         if len(bib) > 0:
